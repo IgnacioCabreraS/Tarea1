@@ -1,15 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <stdbool.h>
 #include "list.h"
-#include "list.c"
+#include <stdbool.h>
+
 
 List * cargar();
 List * importar();
-void * firstList(List *);
-void pushFront(List *, const void *);
-void pushBack(List *, const void *);
 const char*get_csv_field (char *, int);
 
 typedef struct{
@@ -51,7 +48,6 @@ int main(){
             
         }
     }
-
     return 0;
 }
 
@@ -76,7 +72,6 @@ List * cargar(FILE * file, List* lista_canciones){
         cont++; 
         if(cont == 69) break;
     } 
-
 }
 List * importar(){
   char archivo[100];
