@@ -6,7 +6,7 @@
 #include "list.h"
 
 int main(){
-    printf("toy volao alo");
+    printf("toy volao alo\n");
     printf ("otro print señores");
     return 0;
 }
