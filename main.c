@@ -8,7 +8,7 @@ int main(){
     printf("toy volao alo\n");
     printf ("otro print señores\n");
     printf("a\n");
-    printf("marco chupame pen.\n");
+    printf("marco\n");
     return 0;
     
 }
