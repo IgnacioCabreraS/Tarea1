@@ -1,7 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <assert.h>
 #include "list.h"
+#include <stdbool.h>
 
 typedef struct Node Node;
 
@@ -146,4 +148,11 @@ void cleanList(List * list) {
     while (list->head != NULL) {
         popFront(list);
     }
+}
+
+bool vacio(List * list){
+  if(!list->head){
+    return true;
+  }
+  return false;
 }

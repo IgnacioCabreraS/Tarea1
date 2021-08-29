@@ -3,17 +3,27 @@
 #include <string.h>
 #include <stdbool.h>
 #include "list.h"
+#include "list.c"
+
+List * cargar();
+List * importar();
+void * firstList(List *);
+void pushFront(List *, const void *);
+void pushBack(List *, const void *);
+const char*get_csv_field (char *, int);
 
 typedef struct{
-    const char * Cancion;
-    const char * Banda;
-    const char * Genero;
-    int anno[4];
-    int lista[7];
+    const char * nombre;
+    const char * banda;
+    const char * genero;
+    const char * anno;
+    const  char * list_rep;
 }Cancion;
 
 int main(){
-    
+    List * L;
+    L = importar();
+
     /////////////////////////MENU/////////////////////////////
     int opcion=1;
     printf("----------------- CANCIONES ------------------\n\n");
@@ -45,6 +55,42 @@ int main(){
     return 0;
 }
 
+List * cargar(FILE * file, List* lista_canciones){
+    char linea [1024];
+    int i;
+    int cont = 0;
+    while (fgets (linea, 1024, file) != NULL) { // Se lee la linea
+        Cancion * cancion = (Cancion*) malloc (sizeof(Cancion));
+        for(i = 0; i < 4; i++){
+            const char *aux = get_csv_field(linea, i); // Se obtiene el nombre
+            if(i == 0) cancion->nombre = (char *)aux;
+            if(i == 1) cancion->banda = (char *)aux;
+            if(i == 2) cancion->genero = (char *)aux;
+            if(i == 3) cancion->anno = (char *)aux;
+            if(i == 4) cancion->list_rep = (char *)aux;
+        }
+        if(vacio(lista_canciones)){
+            pushFront(lista_canciones, cancion);
+            firstList(lista_canciones);
+        }else pushBack(lista_canciones, cancion);
+        cont++; 
+        if(cont == 69) break;
+    } 
+
+}
+List * importar(){
+  char archivo[100];
+  FILE *file;
+
+  while(file == NULL){
+      printf("Ingresar nombre archivo: ");
+      scanf("%s", &archivo);
+      strcat(archivo, ".csv");
+      file  = fopen(archivo, "a");
+    }
+    List* lista_canciones = createList();
+    cargar(file,lista_canciones);
+}
 const char*get_csv_field (char * tmp, int k) {
     int open_mark = 0;
     char* ret=(char*) malloc(100*sizeof(char));

@@ -27,4 +27,6 @@ void * popCurrent(List * list);
 
 void cleanList(List * list);
 
+bool vacio(List * list);
+
 #endif /* List_h */
