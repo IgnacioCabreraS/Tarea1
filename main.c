@@ -12,8 +12,6 @@ typedef struct{
     int lista[7];
 }Cancion;
 
-
-
 int main(){
     
     /////////////////////////MENU/////////////////////////////
