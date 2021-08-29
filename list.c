@@ -2,8 +2,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include <assert.h>
-#include "list.h"
 #include <stdbool.h>
+#include "list.h"
 
 typedef struct Node Node;
 
