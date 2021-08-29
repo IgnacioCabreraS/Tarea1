@@ -4,7 +4,6 @@
 #include <stdbool.h>
 #include "list.h"
 
-
 List * cargar();
 List * importar();
 const char*get_csv_field (char *, int);
