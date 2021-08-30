@@ -100,13 +100,39 @@ List * importar(){
     return L;
 }
 
-void mostrarCosas(List *L){
+void *buscarNombre (List * L, Cancion * nuevaCancion){
+    Cancion * l = firstList(L);
+
+    while(l->nombre != nuevaCancion->nombre){
+        
+    }
+    /*
+    while(stricmp(nuevaCancion->nombre,l->nombre)!=0){
+        l=nextList(L);
+        if(!l)break;
+        if(stricmp(nuevaCancion->nombre,l->nombre) == 0){
+            printf("Esta cancion ya existe\n");
+            return NULL;
+        }
+    } 
+    */
+    return l;
     
-    Cancion * cancionPrueba = firstList(L);
-    printf("%s \n", cancionPrueba->nombre);
-    printf("%-10s \n", cancionPrueba->banda);
-    printf("%-10s \n", cancionPrueba->genero);
-    
+}
+
+void agregarCancion (List * L){
+    Cancion * nuevaCancion = (Cancion*) malloc (sizeof(Cancion));
+    printf("Ingrese el nombre de su cancion: ");
+    scanf("%s",&nuevaCancion->nombre);
+
+    Cancion * l;
+    Cancion * cancion = firstList(L);
+    l = buscarNombre(L, nuevaCancion);
+
+}
+
+void buscarPorNombre (List * L){
+
 }
 
 int main(){
@@ -119,24 +145,26 @@ int main(){
     while (opcion!=0){
         printf("1. Agregar cancion\n");
         printf("2. Eliminar cancion\n");
-        printf("3. Buscar cancion por nombre\n");
-        printf("4. Buscar cancion por artista\n");
-        printf("5. Buscar cancion por genero\n");
-        printf("6. Mostrar nombres de las listas de reproduccion\n");
-        printf("7. Mostrar lista de reproduccion\n");
-        printf("8. Mostrar todas las canciones\n");
+        printf("3. BuscarPorNombre\n");
+        printf("4. Buscar cancion por nombre\n");
+        printf("5. Buscar cancion por artista\n");
+        printf("6. Buscar cancion por genero\n");
+        printf("7. Mostrar nombres de las listas de reproduccion\n");
+        printf("8. Mostrar lista de reproduccion\n");
+        printf("9. Mostrar todas las canciones\n");
         printf("0. Salir del programa\n");
         scanf("\n%d",&opcion);
 
         switch(opcion){
-            case 1:mostrarCosas(L);break;
+            case 1:agregarCancion(L);break;
             case 2:printf("Eliminar cancion (no hecha)\n");break;
-            case 3:printf("Buscar cancion por nombre (no hecha)\n");break;
-            case 4:printf("Buscar cancion por artista (no hecha)\n");break;
-            case 5:printf("Buscar cancion por genero (no hecha)\n");break;
-            case 6:printf("Mostrar nombres de las listas de reproduccion (no hecha)[n");break;
-            case 7:printf("Mostrar lista de reproduccion (no hecha)\n");break;
-            case 8:printf("Mostrar todas las canciones (no hecha)\n");break;
+            case 3:buscarPorNombre(L);break;
+            case 4:printf("Buscar cancion por nombre (no hecha)\n");break;
+            case 5:printf("Buscar cancion por artista (no hecha)\n");break;
+            case 6:printf("Buscar cancion por genero (no hecha)\n");break;
+            case 7:printf("Mostrar nombres de las listas de reproduccion (no hecha)[n");break;
+            case 8:printf("Mostrar lista de reproduccion (no hecha)\n");break;
+            case 9:printf("Mostrar todas las canciones (no hecha)\n");break;
             
         }
     }
