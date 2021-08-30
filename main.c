@@ -80,7 +80,7 @@ List * cargar(FILE * file, List* L){
             pushBack(L, cancion);
         }
         cont++; 
-        if(cont == 69) break;
+        if(cont == 70) break;
     } 
 }
 
