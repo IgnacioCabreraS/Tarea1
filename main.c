@@ -115,24 +115,7 @@ List * importar(){
     return L;
 }
 
-/*
-void *buscarNombre (List * L, Cancion * nuevaCancion){
-    Cancion * l = firstList(L);
 
-    while(strcmp(nuevaCancion->nombre,l->nombre)!=0){
-        l=nextList(L);
-        if(!l)break;
-        if(strcmp(nuevaCancion->nombre,l->nombre) == 0){
-            printf("Esta cancion ya existe\n");
-            return NULL;
-        }
-    } 
-    
-
-    return l;
-    
-}
-*/
 
 void agregarCancion (List * L){
     Cancion * nuevaCancion = (Cancion*) malloc (sizeof(Cancion));
@@ -143,30 +126,29 @@ void agregarCancion (List * L){
     char * lista = (char*) malloc(30*sizeof(char));
 
     printf("Ingrese el nombre de su cancion: ");
-    scanf("%s",nombre);
+    scanf(" %[^\n]s", nombre);
     nuevaCancion->nombre=nombre;
     printf("\nNombre cancion nueva: %s\n", nuevaCancion->nombre);
 
     printf("Ingrese la banda de su cancion: ");
-    scanf("%s",banda);
+    scanf(" %[^\n]s",banda);
     nuevaCancion->banda=banda;
     printf("\nBanda cancion nueva: %s\n", nuevaCancion->banda);
 
     printf("Ingrese el/los genero/s de su cancion: ");
-    scanf("%s",genero);
+    scanf(" %[^\n]s",genero);
     nuevaCancion->genero=genero;
     printf("\nGenero cancion nueva: %s\n", nuevaCancion->genero);
 
     printf("Ingrese el año de su cancion: ");
-    scanf("%s",anno);
+    scanf(" %[^\n]s",anno);
     nuevaCancion->anno=anno;
     printf("\nAnno cancion nueva: %s\n", nuevaCancion->anno);
 
     printf("Ingrese la lista en la que desea ingresar su cancion: ");
-    scanf("%s",lista);
+    scanf(" %[^\n]s]",lista);
     nuevaCancion->list_rep=lista;
     printf("\nLista cancion nueva: %s\n", nuevaCancion->list_rep);
-
     pushBack(L,nuevaCancion);
     printf("Nueva cancion agregada.\n");
     
@@ -189,6 +171,24 @@ void agregarCancion (List * L){
     
 }*/
 
+/*
+void *buscarNombre (List * L, Cancion * nuevaCancion){
+    Cancion * l = firstList(L);
+
+    while(strcmp(nuevaCancion->nombre,l->nombre)!=0){
+        l=nextList(L);
+        if(!l)break;
+        if(strcmp(nuevaCancion->nombre,l->nombre) == 0){
+            printf("Esta cancion ya existe\n");
+            return NULL;
+        }
+    } 
+    
+
+    return l;
+    
+}
+*/
 void buscarPorNombre (List * L){
 
     /*char tema[101];
