@@ -64,13 +64,28 @@ List * cargar(FILE * file, List* L){
             const char *aux = get_csv_field(lineaArchivo, i); // Se obtiene el nombre
             if(i == 0){
                 cancion->nombre = (char *)aux;
-                printf("%s\n",cancion->nombre);
+                //printf("%s\n",cancion->nombre);
             }
             
-            if(i == 1) cancion->banda = (char *)aux;
-            if(i == 2) cancion->genero = (char *)aux;
-            if(i == 3) cancion->anno = (char *)aux;
-            if(i == 4) cancion->list_rep = (char *)aux;
+            if(i == 1){
+                cancion->banda = (char *)aux;
+            } 
+
+            if(i == 2){
+                cancion->genero = (char *)aux;
+                //printf("%s\n",cancion->genero);
+            } 
+
+            if(i == 3){
+                cancion->anno = (char *)aux;
+                //printf("%s\n",cancion->anno);
+            } 
+
+            if(i == 4){
+                cancion->list_rep = (char *)aux;
+                //printf("%s\n",cancion->list_rep);
+            } 
+
         }
         
         if(vacio(L)){
@@ -99,6 +114,7 @@ List * importar(){
     //fclose(archivo);
     return L;
 }
+
 /*
 void *buscarNombre (List * L, Cancion * nuevaCancion){
     Cancion * l = firstList(L);
