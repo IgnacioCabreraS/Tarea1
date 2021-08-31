@@ -172,14 +172,30 @@ void agregarCancion (List * L){
     
 }
 
+/*void buscar(char tema[101], List* L){
+    
+    //tenemos que recorrer y comparar la lista para ver si esta el nombre
+    // si esta el nombre lo imprimimos(usar funcion mostrar)
+    // hasta llegar al final de la lista/ archivo
+    
+    int ok = 0;
+    List * aux = firstList(L);
+    while ((aux != NULL) && (!ok)){
+        if(aux->nombre == tema) ok = 1;
+        else aux= nextList(L);
+    }
+    if(ok == 1) printf ("Esta");
+    else printf ("No esta");
+    
+}*/
+
 void buscarPorNombre (List * L){
 
-    char tema[20];
-    printf ("Ingrese el nombre de la cancion");
-    scanf("%s",tema);
+    /*char tema[101];
+    printf("Ingrese la cancion\n");
+    scanf("%s", tema);
+    buscar(tema, L);*/
     
-    
-
 }
 
 int main(){
