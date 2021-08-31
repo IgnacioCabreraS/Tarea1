@@ -55,13 +55,13 @@ const char*get_csv_field (char * tmp, int k) {
 }
 
 List * cargar(FILE * file, List* L){
-    char linea [1024];
+    char lineaArchivo[1024];
     int i;
     int cont = 0;
-    while (fgets (linea, 1023, file) != NULL) {
+    while (fgets (lineaArchivo, 1023, file) != NULL) {
         Cancion * cancion = (Cancion*) malloc (sizeof(Cancion));
         for(i = 0; i < 4; i++){
-            const char *aux = get_csv_field(linea, i); // Se obtiene el nombre
+            const char *aux = get_csv_field(lineaArchivo, i); // Se obtiene el nombre
             if(i == 0){
                 cancion->nombre = (char *)aux;
                 printf("%s\n",cancion->nombre);
@@ -72,7 +72,7 @@ List * cargar(FILE * file, List* L){
             if(i == 3) cancion->anno = (char *)aux;
             if(i == 4) cancion->list_rep = (char *)aux;
         }
-
+        
         if(vacio(L)){
             pushFront(L, cancion);
             firstList(L);
@@ -80,7 +80,7 @@ List * cargar(FILE * file, List* L){
             pushBack(L, cancion);
         }
         cont++; 
-        if(cont == 69) break;
+        if(cont == 70) break;
     } 
 }
 
@@ -96,42 +96,73 @@ List * importar(){
     }while(!file);
     List * L = createList();
     cargar(file,L);
-
+    //fclose(archivo);
     return L;
 }
-
+/*
 void *buscarNombre (List * L, Cancion * nuevaCancion){
     Cancion * l = firstList(L);
 
-    while(l->nombre != nuevaCancion->nombre){
-        
-    }
-    /*
-    while(stricmp(nuevaCancion->nombre,l->nombre)!=0){
+    while(strcmp(nuevaCancion->nombre,l->nombre)!=0){
         l=nextList(L);
         if(!l)break;
-        if(stricmp(nuevaCancion->nombre,l->nombre) == 0){
+        if(strcmp(nuevaCancion->nombre,l->nombre) == 0){
             printf("Esta cancion ya existe\n");
             return NULL;
         }
     } 
-    */
+    
+
     return l;
     
 }
+*/
 
 void agregarCancion (List * L){
     Cancion * nuevaCancion = (Cancion*) malloc (sizeof(Cancion));
+    char * nombre = (char*) malloc(30*sizeof(char));
+    char * banda = (char*) malloc(30*sizeof(char));
+    char * anno= (char*) malloc(30*sizeof(char));
+    char * genero= (char*) malloc(30*sizeof(char));
+    char * lista = (char*) malloc(30*sizeof(char));
+
     printf("Ingrese el nombre de su cancion: ");
-    scanf("%s",&nuevaCancion->nombre);
+    scanf("%s",nombre);
+    nuevaCancion->nombre=nombre;
+    printf("\nNombre cancion nueva: %s\n", nuevaCancion->nombre);
 
-    Cancion * l;
-    Cancion * cancion = firstList(L);
-    l = buscarNombre(L, nuevaCancion);
+    printf("Ingrese la banda de su cancion: ");
+    scanf("%s",banda);
+    nuevaCancion->banda=banda;
+    printf("\nBanda cancion nueva: %s\n", nuevaCancion->banda);
 
+    printf("Ingrese el/los genero/s de su cancion: ");
+    scanf("%s",genero);
+    nuevaCancion->genero=genero;
+    printf("\nGenero cancion nueva: %s\n", nuevaCancion->genero);
+
+    printf("Ingrese el año de su cancion: ");
+    scanf("%s",anno);
+    nuevaCancion->anno=anno;
+    printf("\nAnno cancion nueva: %s\n", nuevaCancion->anno);
+
+    printf("Ingrese la lista en la que desea ingresar su cancion: ");
+    scanf("%s",lista);
+    nuevaCancion->list_rep=lista;
+    printf("\nLista cancion nueva: %s\n", nuevaCancion->list_rep);
+
+    pushBack(L,nuevaCancion);
+    printf("Nueva cancion agregada.\n");
+    
 }
 
 void buscarPorNombre (List * L){
+
+    char tema[20];
+    printf ("Ingrese el nombre de la cancion");
+    scanf("%s",tema);
+    
+    
 
 }
 
