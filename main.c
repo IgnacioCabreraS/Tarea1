@@ -111,14 +111,32 @@ List * importar(){
     }while(!file);
     List * L = createList();
     cargar(file,L);
-    //fclose(archivo);
+    fclose(file);
     return L;
+}
+
+void * buscarNombre (List * L, Cancion * nuevaCancion){
+    Cancion * l = firstList(L);
+
+    while(strcmp(nuevaCancion->nombre,l->nombre)!=0){
+        l=nextList(L);
+        if(!l)break;
+        if(strcmp(nuevaCancion->nombre,l->nombre) == 0){
+            printf("Esta cancion ya existe\n");
+            return NULL;
+        }
+    } 
+    
+
+    return l;
+    
 }
 
 
 
 void agregarCancion (List * L){
     Cancion * nuevaCancion = (Cancion*) malloc (sizeof(Cancion));
+
     char * nombre = (char*) malloc(30*sizeof(char));
     char * banda = (char*) malloc(30*sizeof(char));
     char * anno= (char*) malloc(30*sizeof(char));
@@ -128,6 +146,8 @@ void agregarCancion (List * L){
     printf("Ingrese el nombre de su cancion: ");
     scanf(" %[^\n]s", nombre);
     nuevaCancion->nombre=nombre;
+    Cancion * l;
+    l = buscarNombre(L,nuevaCancion);
     printf("\nNombre cancion nueva: %s\n", nuevaCancion->nombre);
 
     printf("Ingrese la banda de su cancion: ");
@@ -171,24 +191,9 @@ void agregarCancion (List * L){
     
 }*/
 
-/*
-void *buscarNombre (List * L, Cancion * nuevaCancion){
-    Cancion * l = firstList(L);
 
-    while(strcmp(nuevaCancion->nombre,l->nombre)!=0){
-        l=nextList(L);
-        if(!l)break;
-        if(strcmp(nuevaCancion->nombre,l->nombre) == 0){
-            printf("Esta cancion ya existe\n");
-            return NULL;
-        }
-    } 
-    
 
-    return l;
-    
-}
-*/
+
 void buscarPorNombre (List * L){
 
     /*char tema[101];
