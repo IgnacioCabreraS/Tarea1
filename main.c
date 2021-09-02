@@ -236,6 +236,27 @@ void mostrarLista (List * L){
     printf ("\n");
 }
 
+void Eliminar(List * L){
+    char * canElimn = (char*) malloc(30*sizeof(char));
+    int contador = 0;
+    printf("Ingrese la cancion a eliminar\n");
+    scanf(" %[^\n]s]", canElimn);
+
+    Cancion* l = firstList(L);
+
+    while(l->nombre != NULL){
+        if(strcmp(l->nombre, canElimn) == 0){
+            popCurrent(L);
+            contador++;
+            break;
+        }
+        l=nextList(L);
+        if(!l)break;
+    } 
+    if(contador == 0) printf("\nNo existe la cancion a eliminar\n");
+    else printf("\nCancion eliminada\n");
+}
+
 void mostrarCanciones(List * L){
     Cancion * x = (Cancion*) malloc(sizeof(Cancion));
     x = firstList (L);
@@ -265,18 +286,20 @@ int main(){
         printf("6. Mostrar nombres de las listas de reproduccion\n");
         printf("7. Mostrar lista de reproduccion\n");
         printf("8. Mostrar todas las canciones\n");
+        printf("9. Exportar canciones a un archivo csv nuevo.\n");
         printf("0. Salir del programa\n");
         scanf("\n%d",&opcion);
 
         switch(opcion){
             case 1:agregarCancion(L);break;
-            case 2:printf("Eliminar cancion (no hecha)\n");break;
+            case 2:Eliminar(L);break;
             case 3:buscarPorNombre(L);break;
             case 4:printf("Buscar cancion por artista (no hecha)\n");break;
             case 5:printf("Buscar cancion por genero (no hecha)\n");break;
             case 6:printf("Mostrar nombres de las listas de reproduccion (no hecha)\n");break;
             case 7:mostrarLista(L);break;
             case 8:mostrarCanciones(L);break;
+            case 9:printf("Exportar canciones a un archivo csv nuevo (no hecha).\n");break;
             
         }
     }
