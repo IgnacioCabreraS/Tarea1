@@ -199,8 +199,8 @@ void * agregarCancion (List * L){
     printf("\nLista cancion nueva: %s\n", nuevaCancion->list_rep);
     pushBack(L,nuevaCancion);
 
-    if(L == NULL) printf("Esta cancion ya existe\n");
-    else printf("Nueva cancion agregada.\n");
+    
+    printf("Nueva cancion agregada.\n");
 }
 
 void mostrarCanciones(List * L){
