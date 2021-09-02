@@ -203,6 +203,39 @@ void * agregarCancion (List * L){
     printf("Nueva cancion agregada.\n");
 }
 
+void mostrarLista (List * L){
+
+    Cancion * x = (Cancion*) malloc(sizeof(Cancion));
+
+    char nombreLista[100];
+    int existe=0;
+
+    printf ("Ingrese el nombre de la lista a buscar: ");
+    scanf (" %[^\n]s]", &nombreLista);
+    printf ("\n");
+    x = firstList (L);
+    while (x != NULL)
+    {
+        if (strcmp (x->list_rep, nombreLista) == 0)
+        {
+            printf ("%s, %s, %s, %s, %s\n", x->nombre, x->banda, x->genero, x->anno, x->list_rep);
+            existe = 1;
+            x = nextList (L);
+        }
+        else
+        {
+            x = nextList (L);
+        }
+    }
+
+    if (existe == 0)
+    {
+        printf ("No existe la lista ingresada\n");
+    }
+
+    printf ("\n");
+}
+
 void mostrarCanciones(List * L){
     Cancion * x = (Cancion*) malloc(sizeof(Cancion));
     x = firstList (L);
@@ -241,8 +274,8 @@ int main(){
             case 3:buscarPorNombre(L);break;
             case 4:printf("Buscar cancion por artista (no hecha)\n");break;
             case 5:printf("Buscar cancion por genero (no hecha)\n");break;
-            case 6:printf("Mostrar nombres de las listas de reproduccion (no hecha)[n");break;
-            case 7:printf("Mostrar lista de reproduccion (no hecha)\n");break;
+            case 6:printf("Mostrar nombres de las listas de reproduccion (no hecha)\n");break;
+            case 7:mostrarLista(L);break;
             case 8:mostrarCanciones(L);break;
             
         }
