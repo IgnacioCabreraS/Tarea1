@@ -7,6 +7,8 @@
 List * cargar();
 List * importar();
 const char*get_csv_field (char *, int);
+typedef struct listStruct list;
+
 
 typedef struct{
     const char * nombre;
@@ -60,7 +62,7 @@ List * cargar(FILE * file, List* L){
     int cont = 0;
     while (fgets (lineaArchivo, 1023, file) != NULL) {
         Cancion * cancion = (Cancion*) malloc (sizeof(Cancion));
-        for(i = 0; i < 4; i++){
+        for(i = 0; i <= 4; i++){
             const char *aux = get_csv_field(lineaArchivo, i); // Se obtiene el nombre
             if(i == 0){
                 cancion->nombre = (char *)aux;
@@ -115,39 +117,65 @@ List * importar(){
     return L;
 }
 
-void * buscarNombre (List * L, Cancion * nuevaCancion){
-    Cancion * l = firstList(L);
+void buscarPorNombre (List * L){
+    char * tema = (char*) malloc(40*sizeof(char));
+    printf("Ingrese la cancion\n");
+    scanf(" %[^\n]s]", tema);
+    int contador = 0;
 
-    while(strcmp(nuevaCancion->nombre,l->nombre)!=0){
+    Cancion* l = firstList(L);
+
+    while(l->nombre != NULL){
+        if(strcmp(l->nombre, tema) == 0){
+            printf("\nNombre de la cancion: %s\n", l->nombre);
+            printf("\nNombre de la banda o artista: %s\n", l->banda);
+            printf("\nTipo de genero: %s\n", l->genero);
+            printf("\nYear: %s\n", l->anno);
+            printf("\nLista de reproduccion: %s\n", l->list_rep);
+            contador++;
+        }
         l=nextList(L);
         if(!l)break;
-        if(strcmp(nuevaCancion->nombre,l->nombre) == 0){
-            printf("Esta cancion ya existe\n");
-            return NULL;
-        }
     } 
-    
-
-    return l;
-    
+    printf("\n");
+    if(contador == 0)printf("no ta manito\n");
+    printf("\n");
 }
 
 
 
-void agregarCancion (List * L){
+void * agregarCancion (List * L){
     Cancion * nuevaCancion = (Cancion*) malloc (sizeof(Cancion));
-
     char * nombre = (char*) malloc(30*sizeof(char));
-    char * banda = (char*) malloc(30*sizeof(char));
-    char * anno= (char*) malloc(30*sizeof(char));
-    char * genero= (char*) malloc(30*sizeof(char));
-    char * lista = (char*) malloc(30*sizeof(char));
 
     printf("Ingrese el nombre de su cancion: ");
     scanf(" %[^\n]s", nombre);
     nuevaCancion->nombre=nombre;
-    Cancion * l;
-    l = buscarNombre(L,nuevaCancion);
+    Cancion * cancion = firstList(L);
+    
+    while(cancion->nombre != NULL){
+        
+        if(strcmp(cancion->nombre, nuevaCancion->nombre)==0){
+            printf("Esta cancion ya existe manito -_- .\n");
+            nuevaCancion->nombre = "0";
+            break;
+        }
+        cancion=nextList(L);
+        if(!cancion){
+            break;
+        }
+    }
+    
+    if(nuevaCancion->nombre == "0"){
+        return NULL;
+    }
+
+    char * banda = (char*) malloc(30*sizeof(char));
+    char * anno= (char*) malloc(4*sizeof(char));
+    char * genero= (char*) malloc(30*sizeof(char));
+    char * lista = (char*) malloc(30*sizeof(char));
+    
+
     printf("\nNombre cancion nueva: %s\n", nuevaCancion->nombre);
 
     printf("Ingrese la banda de su cancion: ");
@@ -174,32 +202,16 @@ void agregarCancion (List * L){
     
 }
 
-/*void buscar(char tema[101], List* L){
-    
-    //tenemos que recorrer y comparar la lista para ver si esta el nombre
-    // si esta el nombre lo imprimimos(usar funcion mostrar)
-    // hasta llegar al final de la lista/ archivo
-    
-    int ok = 0;
-    List * aux = firstList(L);
-    while ((aux != NULL) && (!ok)){
-        if(aux->nombre == tema) ok = 1;
-        else aux= nextList(L);
+void mostrarCanciones(List * L){
+    Cancion * x = (Cancion*) malloc(sizeof(Cancion));
+    x = firstList (L);
+    printf ("%s, %s, %s, %s, %s\n", x->nombre, x->banda, x->genero, x->anno, x->list_rep);
+    x = nextList (L);
+    while (x != NULL)
+    {
+        printf ("%s, %s, %s, %s, %s\n", x->nombre, x->banda, x->genero, x->anno, x->list_rep);
+        x = nextList (L);
     }
-    if(ok == 1) printf ("Esta");
-    else printf ("No esta");
-    
-}*/
-
-
-
-
-void buscarPorNombre (List * L){
-
-    /*char tema[101];
-    printf("Ingrese la cancion\n");
-    scanf("%s", tema);
-    buscar(tema, L);*/
     
 }
 
@@ -213,13 +225,12 @@ int main(){
     while (opcion!=0){
         printf("1. Agregar cancion\n");
         printf("2. Eliminar cancion\n");
-        printf("3. BuscarPorNombre\n");
-        printf("4. Buscar cancion por nombre\n");
-        printf("5. Buscar cancion por artista\n");
-        printf("6. Buscar cancion por genero\n");
-        printf("7. Mostrar nombres de las listas de reproduccion\n");
-        printf("8. Mostrar lista de reproduccion\n");
-        printf("9. Mostrar todas las canciones\n");
+        printf("3. Buscar cancion por nombre\n");
+        printf("4. Buscar cancion por artista\n");
+        printf("5. Buscar cancion por genero\n");
+        printf("6. Mostrar nombres de las listas de reproduccion\n");
+        printf("7. Mostrar lista de reproduccion\n");
+        printf("8. Mostrar todas las canciones\n");
         printf("0. Salir del programa\n");
         scanf("\n%d",&opcion);
 
@@ -227,12 +238,11 @@ int main(){
             case 1:agregarCancion(L);break;
             case 2:printf("Eliminar cancion (no hecha)\n");break;
             case 3:buscarPorNombre(L);break;
-            case 4:printf("Buscar cancion por nombre (no hecha)\n");break;
-            case 5:printf("Buscar cancion por artista (no hecha)\n");break;
-            case 6:printf("Buscar cancion por genero (no hecha)\n");break;
-            case 7:printf("Mostrar nombres de las listas de reproduccion (no hecha)[n");break;
-            case 8:printf("Mostrar lista de reproduccion (no hecha)\n");break;
-            case 9:printf("Mostrar todas las canciones (no hecha)\n");break;
+            case 4:printf("Buscar cancion por artista (no hecha)\n");break;
+            case 5:printf("Buscar cancion por genero (no hecha)\n");break;
+            case 6:printf("Mostrar nombres de las listas de reproduccion (no hecha)[n");break;
+            case 7:printf("Mostrar lista de reproduccion (no hecha)\n");break;
+            case 8:mostrarCanciones(L);break;
             
         }
     }
