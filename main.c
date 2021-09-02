@@ -118,21 +118,15 @@ List * importar(){
 void * buscarNombre (List * L, Cancion * nuevaCancion){
     Cancion * l = firstList(L);
 
-    while(strcmp(nuevaCancion->nombre,l->nombre)!=0){
+    while(strcmp(nuevaCancion->nombre,l->nombre) != 0){
         l=nextList(L);
         if(!l)break;
         if(strcmp(nuevaCancion->nombre,l->nombre) == 0){
-            printf("Esta cancion ya existe\n");
             return NULL;
         }
     } 
-    
-
     return l;
-    
 }
-
-
 
 void agregarCancion (List * L){
     Cancion * nuevaCancion = (Cancion*) malloc (sizeof(Cancion));
@@ -170,37 +164,47 @@ void agregarCancion (List * L){
     nuevaCancion->list_rep=lista;
     printf("\nLista cancion nueva: %s\n", nuevaCancion->list_rep);
     pushBack(L,nuevaCancion);
-    printf("Nueva cancion agregada.\n");
-    
+
+    if(L == NULL) printf("Esta cancion ya existe\n");
+    else printf("Nueva cancion agregada.\n");
 }
 
-/*void buscar(char tema[101], List* L){
-    
-    //tenemos que recorrer y comparar la lista para ver si esta el nombre
-    // si esta el nombre lo imprimimos(usar funcion mostrar)
-    // hasta llegar al final de la lista/ archivo
-    
-    int ok = 0;
-    List * aux = firstList(L);
-    while ((aux != NULL) && (!ok)){
-        if(aux->nombre == tema) ok = 1;
-        else aux= nextList(L);
-    }
-    if(ok == 1) printf ("Esta");
-    else printf ("No esta");
-    
-}*/
+void Eliminar(List * L){
+    char * canElimn = (char*) malloc(30*sizeof(char));
+    printf("Ingrese la cancion a eliminar\n");
+    scanf("%s", canElimn);
 
+    Cancion* l = firstList(L);
 
+    while(strcmp(l->nombre, canElimn) != 0){
+        l=nextList(L);
+        if(!l)break;
+        if(strcmp(l->nombre, canElimn) == 0){
+            popCurrent(L);
+        }
+    } 
+}
 
 
 void buscarPorNombre (List * L){
-
-    /*char tema[101];
+    Cancion * lis = (Cancion*) malloc (sizeof(Cancion));
+    char * tema = (char*) malloc(30*sizeof(char));
     printf("Ingrese la cancion\n");
-    scanf("%s", tema);
-    buscar(tema, L);*/
-    
+    scanf(" %[^\n]s]", tema);
+
+    Cancion* l = firstList(L);
+
+    while(strcmp(l->nombre, tema) != 0){
+        l=nextList(L);
+        if(!l)break;
+        if(strcmp(l->nombre, tema) == 0){
+            printf("\nNombre de la cancion: %s\n", l->nombre);
+            printf("\nNombre de la banda o artista: %s\n", l->banda);
+            printf("\nTipo de genero: %s\n", l->genero);
+            printf("\nAño: %s\n", l->anno);
+            printf("\nLista de reproducción: %s\n", l->list_rep);
+        }
+    } 
 }
 
 int main(){
@@ -225,8 +229,8 @@ int main(){
 
         switch(opcion){
             case 1:agregarCancion(L);break;
-            case 2:printf("Eliminar cancion (no hecha)\n");break;
-            case 3:buscarPorNombre(L);break;
+            case 2:Eliminar(L);break;
+            case 3:buscarPorNombre(L); break;
             case 4:printf("Buscar cancion por nombre (no hecha)\n");break;
             case 5:printf("Buscar cancion por artista (no hecha)\n");break;
             case 6:printf("Buscar cancion por genero (no hecha)\n");break;
