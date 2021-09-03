@@ -270,6 +270,32 @@ void mostrarCanciones(List * L){
     
 }
 
+void exportarCanciones (List * L){
+    char * nombreArchivo = (char*) malloc(30*sizeof(char));
+    FILE * nuevoFile;
+
+    do{
+        printf("Ingrese el nombre de su nuevo archivo .csv: ");
+        scanf(" %[^\n]s", nombreArchivo);
+        if(nombreArchivo == "Canciones"){
+            printf("Este archivo .csv ya existe, intente con otro nombre.\n");
+        }
+    }while(nombreArchivo == "Canciones");
+    
+    printf("Nombre de su archivo: %s.csv\n",nombreArchivo);
+    
+    nombreArchivo = strcat(nombreArchivo,".csv");
+    nuevoFile=fopen(nombreArchivo,"w+");
+
+    Cancion * cancion = (Cancion*)malloc(sizeof(Cancion));
+    cancion = firstList(L);
+
+    while(cancion!=NULL){
+        fprintf(nuevoFile,"%s,%s,%s,%s,%s\n",cancion->nombre,cancion->banda,cancion->genero,cancion->anno,cancion->list_rep);
+        cancion = nextList(L);
+    }
+}
+
 int main(){
     List * L;
     L = importar();
@@ -299,7 +325,7 @@ int main(){
             case 6:printf("Mostrar nombres de las listas de reproduccion (no hecha)\n");break;
             case 7:mostrarLista(L);break;
             case 8:mostrarCanciones(L);break;
-            case 9:printf("Exportar canciones a un archivo csv nuevo (no hecha).\n");break;
+            case 9:exportarCanciones(L);break;
             
         }
     }
