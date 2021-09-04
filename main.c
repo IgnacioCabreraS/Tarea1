@@ -172,6 +172,76 @@ void buscarPorGenero (List * L){
     printf("\n");
 }
 
+void listaCuantosTemas (List * L){
+
+    Cancion * x = (Cancion*) malloc(sizeof(Cancion));
+
+    const char * nombre;
+    int esta=0, cont=0;
+
+    x = firstList(L);
+    nombre = x->list_rep;
+    List * N = createList();
+    pushFront (N, nombre);
+    firstList (N);
+    x = nextList (L);
+
+    while (x != NULL)
+    {
+        esta=0;
+        nombre = firstList (N);
+        while (nombre != NULL)
+        {
+            if (strcmp (x->list_rep, nombre) == 0)
+            {
+                esta = 1;
+                nombre = nextList (N);
+            }
+            else
+            {
+                nombre = nextList (N);
+            }
+        }
+
+        if (esta == 0)
+        {
+            pushBack (N, x->list_rep);
+            x = nextList (L);
+        }
+        else
+        {
+            x = nextList (L);
+        }
+    }
+
+    nombre = firstList (N);
+    while (nombre != NULL)
+    {
+        cont = 0;
+        x = firstList (L);
+        while (x != NULL)
+        {
+            if (strcmp (nombre, x->list_rep) == 0)
+            {
+                cont++;
+                x = nextList (L);
+            }
+            else
+            {
+                x = nextList (L);
+            }
+        }
+
+        if (cont != 0)
+        {
+            printf ("Nombre de la lista: %s\n", nombre);
+            printf ("Cantidad de canciones: %d\n", cont);
+        }
+
+        nombre = nextList (N);
+    }
+}
+
 void * agregarCancion (List * L){
     Cancion * nuevaCancion = (Cancion*) malloc (sizeof(Cancion));
     char * nombre = (char*) malloc(30*sizeof(char));
@@ -351,7 +421,7 @@ int main(){
             case 3:buscarPorNombre(L);break;
             case 4:buscarPorArtista(L);break;
             case 5:buscarPorGenero(L);break; //arreglando, faltan demas generos
-            case 6:break;
+            case 6:listaCuantosTemas(L);break;
             case 7:mostrarLista(L);break;
             case 8:mostrarCanciones(L);break;
             case 9:exportarCanciones(L);break;
