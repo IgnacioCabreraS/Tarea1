@@ -60,7 +60,7 @@ List * cargar(FILE * file, List* L){
     char lineaArchivo[1024];
     int i;
     int cont = 0;
-    while (fgets (lineaArchivo, 1023, file) != NULL) {
+    while (fgets (lineaArchivo, 1024, file) != NULL) {
         Cancion * cancion = (Cancion*) malloc (sizeof(Cancion));
         for(i = 0; i <= 4; i++){
             const char *aux = get_csv_field(lineaArchivo, i); // Se obtiene el nombre
@@ -142,7 +142,50 @@ void buscarPorNombre (List * L){
     printf("\n");
 }
 
+void buscarPorArtista(List* L){
+    char * band = (char*) malloc(30*sizeof(char));
+    printf("Ingrese el nombre del artista/banda: ");
+    scanf(" %[^\n]s", band);
 
+    Cancion * l = firstList(L);
+    
+    while(l->banda != NULL){
+        if(strcmp(l->banda, band) == 0){
+            printf("\nNombre de la cancion: %s\n", l->nombre);
+            //printf("\nNombre de la banda o artista: %s\n", l->banda);
+            printf("\nTipo de genero: %s\n", l->genero);
+            printf("\nYear: %s\n", l->anno);
+            printf("\nLista de reproduccion: %s\n", l->list_rep);
+        }
+        l=nextList(L);
+        if(!l)break;
+    }
+    printf("\n");
+}
+
+void buscarPorGenero (List * L){
+    char * gener = (char*) malloc(40*sizeof(char));
+    printf("Ingrese la cancion\n");
+    scanf(" %[^\n]s]", gener);
+    int contador = 0;
+    Cancion* l = firstList(L);
+
+    while(l->genero != NULL){
+        if(strcmp(l->genero, gener) == 0){
+            printf("\nNombre de la cancion: %s\n", l->nombre);
+            printf("\nNombre de la banda o artista: %s\n", l->banda);
+            printf("\nNombre del genero: %s\n", l->genero);
+            printf("\nYear: %s\n", l->anno);
+            printf("\nLista de reproduccion: %s\n", l->list_rep);
+            contador++;
+        }
+        l=nextList(L);
+        if(!l)break;
+    } 
+    printf("\n");
+    if(contador == 0)printf("no ta manito\n");
+    printf("\n");
+}
 
 void * agregarCancion (List * L){
     Cancion * nuevaCancion = (Cancion*) malloc (sizeof(Cancion));
@@ -270,6 +313,7 @@ void mostrarCanciones(List * L){
     
 }
 
+
 void exportarCanciones (List * L){
     char * nombreArchivo = (char*) malloc(30*sizeof(char));
     FILE * nuevoFile;
@@ -320,13 +364,12 @@ int main(){
             case 1:agregarCancion(L);break;
             case 2:Eliminar(L);break;
             case 3:buscarPorNombre(L);break;
-            case 4:printf("Buscar cancion por artista (no hecha)\n");break;
-            case 5:printf("Buscar cancion por genero (no hecha)\n");break;
-            case 6:printf("Mostrar nombres de las listas de reproduccion (no hecha)\n");break;
+            case 4:buscarPorArtista(L);break;
+            case 5:buscarPorGenero(L);break;
+            case 6:break;
             case 7:mostrarLista(L);break;
             case 8:mostrarCanciones(L);break;
             case 9:exportarCanciones(L);break;
-            
         }
     }
     return 0;
