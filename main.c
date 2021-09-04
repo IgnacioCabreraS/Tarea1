@@ -64,30 +64,11 @@ List * cargar(FILE * file, List* L){
         Cancion * cancion = (Cancion*) malloc (sizeof(Cancion));
         for(i = 0; i <= 4; i++){
             const char *aux = get_csv_field(lineaArchivo, i); // Se obtiene el nombre
-            if(i == 0){
-                cancion->nombre = (char *)aux;
-                //printf("%s\n",cancion->nombre);
-            }
-            
-            if(i == 1){
-                cancion->banda = (char *)aux;
-            } 
-
-            if(i == 2){
-                cancion->genero = (char *)aux;
-                //printf("%s\n",cancion->genero);
-            } 
-
-            if(i == 3){
-                cancion->anno = (char *)aux;
-                //printf("%s\n",cancion->anno);
-            } 
-
-            if(i == 4){
-                cancion->list_rep = (char *)aux;
-                //printf("%s\n",cancion->list_rep);
-            } 
-
+            if(i == 0) cancion->nombre = (char *)aux;
+            if(i == 1) cancion->banda = (char *)aux;
+            if(i == 2) cancion->genero = (char *)aux;
+            if(i == 3) cancion->anno = (char *)aux;  
+            if(i == 4) cancion->list_rep = (char *)aux;
         }
         
         if(vacio(L)){
@@ -146,20 +127,24 @@ void buscarPorArtista(List* L){
     char * band = (char*) malloc(30*sizeof(char));
     printf("Ingrese el nombre del artista/banda: ");
     scanf(" %[^\n]s", band);
+    int contador = 0;
 
     Cancion * l = firstList(L);
     
     while(l->banda != NULL){
         if(strcmp(l->banda, band) == 0){
             printf("\nNombre de la cancion: %s\n", l->nombre);
-            //printf("\nNombre de la banda o artista: %s\n", l->banda);
+            printf("\nNombre de la banda o artista: %s\n", l->banda);
             printf("\nTipo de genero: %s\n", l->genero);
             printf("\nYear: %s\n", l->anno);
             printf("\nLista de reproduccion: %s\n", l->list_rep);
+            contador++;
         }
         l=nextList(L);
         if(!l)break;
     }
+    printf("\n");
+    if(contador == 0)printf("no ta manito\n");
     printf("\n");
 }
 
@@ -365,7 +350,7 @@ int main(){
             case 2:Eliminar(L);break;
             case 3:buscarPorNombre(L);break;
             case 4:buscarPorArtista(L);break;
-            case 5:buscarPorGenero(L);break;
+            case 5:buscarPorGenero(L);break; //arreglando, faltan demas generos
             case 6:break;
             case 7:mostrarLista(L);break;
             case 8:mostrarCanciones(L);break;
