@@ -18,7 +18,6 @@ typedef struct{
     const char * list_rep;
 }Cancion;
 
-//Funcion que recibe una linea, la lee hasta la coma y retorna lo leido, todo esto hasta llegar al final de la linea
 const char*get_csv_field (char * tmp, int k) {
     int open_mark = 0;
     char* ret=(char*) malloc(100*sizeof(char));
@@ -57,11 +56,6 @@ const char*get_csv_field (char * tmp, int k) {
     return NULL;
 }
 
-/*  
-    Funcion que lee una linea de un archivo, crea un tipo de dato "Cancion", trabaja la linea en la funcion "get_csv_field"
-    para obtener cada palabra hasta la "," con lo que rellenar los campos el dato tipo "Cancion" e insertarlo en la lista
-    anteriormente creada, todo esto hasta que se acabe la linea y hasta que se lea el archivo por completo
-*/
 List * cargar(FILE * file, List* L){
     char lineaArchivo[1024];
     int i;
@@ -87,7 +81,7 @@ List * cargar(FILE * file, List* L){
         if(cont == 70) break;
     } 
 }
-// Funcion para leer el archivo csv y crear la lista 
+
 List * importar(){
     char archivo[101];
     FILE *file;
@@ -95,7 +89,7 @@ List * importar(){
     do{
       printf("Ingresar nombre archivo: ");
       scanf("%s", &archivo);
-      strcat(archivo, ".csv"); 
+      strcat(archivo, ".csv");
       file  = fopen(archivo, "r");
     }while(!file);
     List * L = createList();
@@ -103,17 +97,15 @@ List * importar(){
     fclose(file);
     return L;
 }
-// Funcion encagrda de buscar en la lista por el nombre
+
 void buscarPorNombre (List * L){
-    // otorgamos memoria a la variableque se  ingresara por pantalla
-    char * tema = (char*) malloc(30*sizeof(char));
+    char * tema = (char*) malloc(40*sizeof(char));
     printf("Ingrese la cancion\n");
     scanf(" %[^\n]s]", tema);
-    int contador = 0; // se usa para saber si la cancion se encuentra en lista
+    int contador = 0;
 
     Cancion* l = firstList(L);
-    
-    // while que funcionara hasta que el el campo de nombre (de la lista) sea distinto de null
+
     while(l->nombre != NULL){
         if(strcmp(l->nombre, tema) == 0){
             printf("\nNombre de la cancion: %s\n", l->nombre);
@@ -127,22 +119,19 @@ void buscarPorNombre (List * L){
         if(!l)break;
     } 
     printf("\n");
-    if(contador == 0)printf("No se encuentra el nombre a buscar\n");
+    if(contador == 0)printf("no ta manito\n");
     printf("\n");
 }
-// Funcion encargada de buscar al artista
+
 void buscarPorArtista(List* L){
-    // se otorga memoria al dato que se ingresara
     char * band = (char*) malloc(30*sizeof(char));
     printf("Ingrese el nombre del artista/banda: ");
     scanf(" %[^\n]s", band);
-    int contador = 0; //utilizado para ver si el dato se encuentra o no
-    // incializamos a la varibke l al principio de la lista
+    int contador = 0;
+
     Cancion * l = firstList(L);
     
-    // while que funcionara hasta que el el campo de banda (de la lista) sea distinto de null
     while(l->banda != NULL){
-        // se usa strcmp para verificar si en la lista se encuentra la banda/artista
         if(strcmp(l->banda, band) == 0){
             printf("\nNombre de la cancion: %s\n", l->nombre);
             printf("\nNombre de la banda o artista: %s\n", l->banda);
@@ -155,63 +144,55 @@ void buscarPorArtista(List* L){
         if(!l)break;
     }
     printf("\n");
-    if(contador == 0)printf("No se encuentra el artista/banda a buscar\n");
+    if(contador == 0)printf("no ta manito\n");
     printf("\n");
 }
 
-// Funcion encargada de sacar la cantidad de generos
+/*
+    if(strcmp(l->genero, gener) == 0){
+            printf("\nNombre de la cancion: %s\n", l->nombre);
+            printf("\nNombre de la banda o artista: %s\n", l->banda);
+            printf("\nNombre del genero: %s\n", l->genero);
+            printf("\nYear: %s\n", l->anno);
+            printf("\nLista de reproduccion: %s\n", l->list_rep);
+            contador++;
+        }
+*/
 int cntG(Cancion * m){
-    int cont = 0; //contador que se retornara
-    // funcion strtok para sacar la cadena por palabras
-    char* token = strtok(m->genero, ", "); 
-    while(token != NULL){
+    int cont = 0;
+    char* token = strtok(m->genero, ", ");
+    while(token){
         cont++;
         token = strtok(NULL, ", ");
     }
     return cont;
 }
-// Funcion encargada de sacar los generos por cada uno
 char* pal(Cancion * m){
-    char* token; // este token es el que guarda la palabra con el strtok
+    char* token;
     token = strtok(m->genero, ", ");
     while(token) token = strtok(NULL, ", ");
-    //se retorna la palabra
-    return token;  
+    return token; 
 }
-// Funcion enargada de buscar el genero
 void buscarPorGenero (List * L){
-    // otorgamos memoria al dato que se ingresara por pantalla
     char * gener = (char*) malloc(40*sizeof(char));
     printf("Ingrese el genero deseado: \n");
     scanf(" %[^\n]s]", gener);
-    // iniciamo nuestro l en la primera posicion de nuetrs lista.
     Cancion* l = firstList(L);
-    int cantGen; // cantidad de generos
-    char * palabra; // variable usada para guardar la palabra obtenida con el strtok
+    int cantGen;
+    char * palabra;
     int cnt = 0;
-    // condicion que se termina al llegar al final de la lista
     while(l != NULL){
         cantGen = cntG(l);
         palabra = pal(l);
-        /*
-            se recorre en base a la cantidad de palabras para compronbar
-            si la palabra a buscar se enuentra entre ellas.
-        */
         for (int i = 0; i < cantGen; i++){
             if(strcmp(palabra, gener) == 0) cnt++;
         }
-        l = nextList(L);  
+        l = nextList(L);
         if(!l) break;
         printf("%i \n", cnt);
     }
-     printf("\n");
-    if(cnt == 0)printf("No se encuentra el genero a buscar\n");
-    printf("\n");
 }
 
-//Funcion que crea una nueva lista en donde por medio de ciclos, se obtendran todos los nombres de las listas de reproduccion
-//que hayan en la primera lista (la cual tiene todas las canciones tanto del csv como las agregadaas por el usuario) para luego
-//nuevamente por medio de ciclos y contadores obtener cuantas canciones tiene cada lista y mostrarlo por pantalla
 void listaCuantosTemas (List * L){
 
     Cancion * x = (Cancion*) malloc(sizeof(Cancion));
@@ -282,9 +263,6 @@ void listaCuantosTemas (List * L){
     }
 }
 
-//Funcion que crea un tipo de dato "Cancion", pide el nombre de una cancion, verifica que esta no esta en la lista,
-//y va pidiendo los otros datos de la cancion (banda, genero, año y lista de reproduccion) para luego agregar la cancion
-//a la lista la cual tiene todas las canciones del archivo csv anteriormente cargado
 void * agregarCancion (List * L){
     Cancion * nuevaCancion = (Cancion*) malloc (sizeof(Cancion));
     char * nombre = (char*) malloc(30*sizeof(char));
@@ -297,7 +275,7 @@ void * agregarCancion (List * L){
     while(cancion->nombre != NULL){
         
         if(strcmp(cancion->nombre, nuevaCancion->nombre)==0){
-            printf("Esta cancion ya existe.\n");
+            printf("Esta cancion ya existe manito -_- .\n");
             nuevaCancion->nombre = "0";
             break;
         }
@@ -343,7 +321,7 @@ void * agregarCancion (List * L){
     
     printf("Nueva cancion agregada.\n");
 }
-//
+
 void mostrarLista (List * L){
 
     Cancion * x = (Cancion*) malloc(sizeof(Cancion));
@@ -376,12 +354,7 @@ void mostrarLista (List * L){
 
     printf ("\n");
 }
- /*
-    Funcion encargada de eliminar el elemnto ingresado por pantalla, en esta funcion creamos una varible tipo cancion
-    para recorrer la lista, ademas utilizamos el strcmp para verificar si la palabra ingresada se encuentra en el campo
-    de nuestro struct. Ademas, verificamos que si no se encuentra regrese por pantalla que no se encuentra en nuestra lista
-    de canciones.
- */
+
 void Eliminar(List * L){
     char * canElimn = (char*) malloc(30*sizeof(char));
     int contador = 0;
@@ -402,11 +375,7 @@ void Eliminar(List * L){
     if(contador == 0) printf("\nNo existe la cancion a eliminar\n");
     else printf("\nCancion eliminada\n");
 }
-/*
-    Funcion encargada de recorrer la lista y mostrar cada uno de los campos que compone
-    para ello utilizamos una variable tipo cancion que nos ayudara a recorrer nuestra lista
-    hasta que esta llega a null y un nexlist para ir avaznando.
-*/
+
 void mostrarCanciones(List * L){
     Cancion * x = (Cancion*) malloc(sizeof(Cancion));
     x = firstList (L);
@@ -420,7 +389,7 @@ void mostrarCanciones(List * L){
     
 }
 
-//exportar ale
+
 void exportarCanciones (List * L){
     char * nombreArchivo = (char*) malloc(30*sizeof(char));
     FILE * nuevoFile;
@@ -447,8 +416,6 @@ void exportarCanciones (List * L){
     }
 }
 
-//Cuerpo principal del programa, donde se crea un dato tipo "Lista" el cual se trabajara mediante funciones para ser una lista con
-//todos las canciones del archivo csv, y ademas se muestra el menu del programa con todas sus funciones
 int main(){
     List * L;
     L = importar();

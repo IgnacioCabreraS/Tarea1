@@ -1,2 +1,0 @@
-
-char* pal(Cancion * m){
