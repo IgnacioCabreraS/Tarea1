@@ -193,38 +193,57 @@ int cntG(Cancion * m){
     y se imprime por pantalla.
 
 */
-void buscarPorGenero (List * L){
-    // otorgamos memoria al dato que se ingresara por pantalla
-    char * gener = (char*) malloc(40*sizeof(char));
-    printf("Ingrese el genero deseado: \n");
-    scanf(" %[^\n]s]", gener);
-    Cancion* l = firstList(L);
-    int cantGen; // cantidad de generos
-    char * palabra; // variable usada para guardar la palabra obtenida con el strtok
-    int cnt = 0;
 
-    while(l != NULL){
-        cantGen = cntG(l);
-        char* token;
-        token = strtok(l->genero, ", ");
-        //while(token) token = strtok(NULL, ", ");
-        for (int i = 0; i < cantGen; i++){
-            if(strcmp(token, gener) == 0){
-                printf("\nNombre de la cancion: %s\n", l->nombre);
-                printf("\nNombre de la banda o artista: %s\n", l->banda);
-                printf("\nTipo de genero: %s\n", l->genero);
-                printf("\nYear: %s\n", l->anno);
-                printf("\nLista de reproduccion: %s\n", l->list_rep);
-                cnt++;
-            } 
-        }
-        l = nextList(L);  
-        if(!l) break;
+void buscarPorGenero (List * L){
+    char* gener = (char*)malloc(30*sizeof(char));
+    printf("keremo la weaita\n");
+    scanf(" %[^\n]s]", gener);
+    Cancion* l = (Cancion*)malloc(30*sizeof(Cancion));
+    l = firstList(L);
+    l = nextList(L);
+    char* token;
+    token = strtok(l->genero, ",");
+    while(token){
+        printf("%s -",token);
+        token = strtok(NULL, ",");
     }
-     printf("\n");
-    if(cnt == 0)printf("No se encuentra el genero a buscar\n");
-    printf("\n");
+    //int cantGeneros = cntG(l);
+    /*
+    for(int i = 0 ; i < cantGeneros ; i++){
+        if(cantGeneros == 1){
+            if(strcmp(l->genero, gener) == 0){
+                printf("\nNombre dez la cancion: %s\n", l->nombre);
+            }
+        }else{
+            char* token;
+            token = strtok(l->genero, ",");
+            //if(strcmp(l->genero, gener) == 0){
+                //printf("si");
+            //}
+            while(token){
+                printf("%s -",token);
+                token = strtok(NULL, ",");
+            }
+        }
+    }*/
+
+
 }
+
+
+
+
+    /*
+        for(int i = 0; l->genero[i] != "\0"; i++){
+            if(l->genero[i] == ","){
+                printf("i");
+            }else{
+                if(strcmp(l->genero, gener) == 0){
+                    printf("\nNombre de la cancion: %s\n", l->nombre);
+                }
+            }
+        }
+    */
 
 /*
     Funcion que crea una nueva lista en donde por medio de ciclos, se obtendran todos los nombres de las listas de reproduccion
