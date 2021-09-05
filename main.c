@@ -186,16 +186,6 @@ int cntG(Cancion * m){
     return cont;
 }
 
-/*
-    Funcion encargada de sacar los generos por cada uno
-*/
-char* pal(Cancion * m){
-    char* token; // este token es el que guarda la palabra con el strtok
-    token = strtok(m->genero, ", ");
-    while(token) token = strtok(NULL, ", ");
-    return token;  
-}
-
 /* 
     Funcion enargada de buscar el genero donde utilizamos una variable l para recorrer la lista y ademas utilizando dos funciones, 
     las cuales nos separa por coma las palabras que se encuentra en el campo de genero y la otra funcion que cuenta la cantidad
@@ -215,13 +205,21 @@ void buscarPorGenero (List * L){
 
     while(l != NULL){
         cantGen = cntG(l);
-        palabra = pal(l);
+        char* token;
+        token = strtok(l->genero, ", ");
+        //while(token) token = strtok(NULL, ", ");
         for (int i = 0; i < cantGen; i++){
-            if(strcmp(palabra, gener) == 0) cnt++;
+            if(strcmp(token, gener) == 0){
+                printf("\nNombre de la cancion: %s\n", l->nombre);
+                printf("\nNombre de la banda o artista: %s\n", l->banda);
+                printf("\nTipo de genero: %s\n", l->genero);
+                printf("\nYear: %s\n", l->anno);
+                printf("\nLista de reproduccion: %s\n", l->list_rep);
+                cnt++;
+            } 
         }
         l = nextList(L);  
         if(!l) break;
-        printf("%i \n", cnt);
     }
      printf("\n");
     if(cnt == 0)printf("No se encuentra el genero a buscar\n");
