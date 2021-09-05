@@ -1,0 +1,2 @@
+
+char* pal(Cancion * m){
