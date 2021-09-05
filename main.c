@@ -13,7 +13,7 @@ typedef struct listStruct list;
 typedef struct{
     const char * nombre;
     const char * banda;
-    const char * genero;
+    char * genero;
     const char * anno;
     const char * list_rep;
 }Cancion;
@@ -148,15 +148,8 @@ void buscarPorArtista(List* L){
     printf("\n");
 }
 
-void buscarPorGenero (List * L){
-    char * gener = (char*) malloc(40*sizeof(char));
-    printf("Ingrese la cancion\n");
-    scanf(" %[^\n]s]", gener);
-    int contador = 0;
-    Cancion* l = firstList(L);
-
-    while(l->genero != NULL){
-        if(strcmp(l->genero, gener) == 0){
+/*
+    if(strcmp(l->genero, gener) == 0){
             printf("\nNombre de la cancion: %s\n", l->nombre);
             printf("\nNombre de la banda o artista: %s\n", l->banda);
             printf("\nNombre del genero: %s\n", l->genero);
@@ -164,12 +157,40 @@ void buscarPorGenero (List * L){
             printf("\nLista de reproduccion: %s\n", l->list_rep);
             contador++;
         }
-        l=nextList(L);
-        if(!l)break;
-    } 
-    printf("\n");
-    if(contador == 0)printf("no ta manito\n");
-    printf("\n");
+*/
+int cntG(Cancion * m){
+    int cont = 0;
+    char* token = strtok(m->genero, ", ");
+    while(token){
+        cont++;
+        token = strtok(NULL, ", ");
+    }
+    return cont;
+}
+char* pal(Cancion * m){
+    char* token;
+    token = strtok(m->genero, ", ");
+    while(token) token = strtok(NULL, ", ");
+    return token; 
+}
+void buscarPorGenero (List * L){
+    char * gener = (char*) malloc(40*sizeof(char));
+    printf("Ingrese el genero deseado: \n");
+    scanf(" %[^\n]s]", gener);
+    Cancion* l = firstList(L);
+    int cantGen;
+    char * palabra;
+    int cnt = 0;
+    while(l != NULL){
+        cantGen = cntG(l);
+        palabra = pal(l);
+        for (int i = 0; i < cantGen; i++){
+            if(strcmp(palabra, gener) == 0) cnt++;
+        }
+        l = nextList(L);
+        if(!l) break;
+        printf("%i \n", cnt);
+    }
 }
 
 void listaCuantosTemas (List * L){
